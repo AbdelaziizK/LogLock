@@ -14,7 +14,8 @@ class BootShutdownReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val type = when (intent.action) {
-            Intent.ACTION_BOOT_COMPLETED -> DeviceEventType.BOOT
+            Intent.ACTION_BOOT_COMPLETED,
+            "android.intent.action.QUICKBOOT_POWERON" -> DeviceEventType.BOOT
             Intent.ACTION_SHUTDOWN       -> DeviceEventType.SHUTDOWN
             else -> return
         }

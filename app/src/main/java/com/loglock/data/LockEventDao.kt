@@ -20,4 +20,8 @@ interface LockEventDao {
 
     @Query("SELECT * FROM lock_events WHERE id = :id")
     suspend fun getById(id: Long): LockEvent?
+
+    // Closes sessions that were left open by a shutdown before the screen was unlocked.
+    @Query("UPDATE lock_events SET isOngoing = 0 WHERE isOngoing = 1")
+    suspend fun closeAllOngoing()
 }

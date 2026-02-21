@@ -52,6 +52,8 @@ class LockAccessibilityService : AccessibilityService() {
         registerReceiver(screenReceiver, filter)
 
         serviceScope.launch {
+            // Close any sessions left open by a shutdown while the screen was locked.
+            db.lockEventDao().closeAllOngoing()
             val cutoff = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7)
             db.lockEventDao().deleteOlderThan(cutoff)
         }
