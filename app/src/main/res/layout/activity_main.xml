@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- App bar -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="14dp"
+        android:background="@color/primary"
+        android:elevation="4dp" />
+
+    <!-- Accessibility setup banner (hidden once service is enabled) -->
+    <TextView
+        android:id="@+id/bannerAccessibility"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        android:background="@color/banner_bg"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:text="Accessibility Service not enabled — tap to set up attempt tracking"
+        android:drawableStart="@android:drawable/ic_dialog_info"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone" />
+
+    <!-- Empty state -->
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No lock events yet.\nLock your screen to start tracking."
+        android:textAlignment="center"
+        android:textColor="#9E9E9E"
+        android:textSize="14sp"
+        android:paddingVertical="48dp"
+        android:paddingHorizontal="24dp"
+        android:visibility="gone" />
+
+    <!-- Log list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>

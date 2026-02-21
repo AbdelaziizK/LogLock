@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#1565C0</color>
+    <color name="primary_dark">#0D47A1</color>
+    <color name="background">#EEEEEE</color>
+    <color name="banner_bg">#E65100</color>
+
+    <!-- Card backgrounds -->
+    <color name="card_normal">#FFFFFF</color>
+    <color name="card_ongoing">#E3F2FD</color>   <!-- light blue: currently locked -->
+    <color name="card_warning">#FFF8E1</color>   <!-- light amber: multiple attempts -->
+    <color name="card_failed">#FBE9E7</color>    <!-- light red: never unlocked -->
+</resources>
