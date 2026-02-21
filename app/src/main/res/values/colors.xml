@@ -10,4 +10,6 @@
     <color name="card_ongoing">#E3F2FD</color>   <!-- light blue: currently locked -->
     <color name="card_warning">#FFF8E1</color>   <!-- light amber: multiple attempts -->
     <color name="card_failed">#FBE9E7</color>    <!-- light red: never unlocked -->
+    <color name="card_boot">#E8F5E9</color>      <!-- light green: device started -->
+    <color name="card_shutdown">#F3E5F5</color>  <!-- light purple: device shut down -->
 </resources>

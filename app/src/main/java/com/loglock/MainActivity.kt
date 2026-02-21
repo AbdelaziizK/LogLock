@@ -8,10 +8,14 @@ import android.view.View
 import android.view.accessibility.AccessibilityManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MediatorLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.loglock.data.DeviceEvent
+import com.loglock.data.LockEvent
 import com.loglock.data.LockEventDatabase
 import com.loglock.databinding.ActivityMainBinding
 import com.loglock.ui.LogAdapter
+import com.loglock.ui.LogItem
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -42,11 +46,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeEvents() {
-        val dao = LockEventDatabase.getInstance(this).lockEventDao()
+        val db    = LockEventDatabase.getInstance(this)
         val since = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7)
-        dao.getRecentEvents(since).observe(this) { events ->
-            adapter.submitList(events)
-            binding.tvEmpty.visibility = if (events.isEmpty()) View.VISIBLE else View.GONE
+
+        var lockEvents:   List<LockEvent>   = emptyList()
+        var deviceEvents: List<DeviceEvent> = emptyList()
+
+        val combined = MediatorLiveData<List<LogItem>>()
+
+        fun rebuild() {
+            val items = buildList {
+                lockEvents.mapTo(this)   { LogItem.Lock(it) }
+                deviceEvents.mapTo(this) { LogItem.Device(it) }
+            }.sortedByDescending { it.timestamp }
+            combined.value = items
+        }
+
+        combined.addSource(db.lockEventDao().getRecentEvents(since)) { events ->
+            lockEvents = events
+            rebuild()
+        }
+        combined.addSource(db.deviceEventDao().getEventsSince(since)) { events ->
+            deviceEvents = events
+            rebuild()
+        }
+
+        combined.observe(this) { items ->
+            adapter.submitList(items)
+            binding.tvEmpty.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
